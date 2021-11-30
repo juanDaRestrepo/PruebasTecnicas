@@ -14,7 +14,7 @@ function cie($caracter){
     }
 }  
 // validar que el numero de caracteres que tiene la cadena es un numero par y que no tenga caracteres diferentes de los aceptados
-if(preg_match('/[^\[\]\{\}\(\)]/',$cadena)==1 or (strlen($cadena)%2)!=0){
+if(preg_match('/[^\[\]\{\}\(\)]/',$cadena)==1 or (strlen($cadena)%2)!=0 or $cadena==null){
     $message = "incorrecto";
     header("Location:pregunta4.php?message=$message");
 }else{
@@ -47,7 +47,7 @@ if(preg_match('/[^\[\]\{\}\(\)]/',$cadena)==1 or (strlen($cadena)%2)!=0){
                             $i=$k;
                             $k++; 
                             break;
-                        }elseif(($k+1)<strlen($cadena)){
+                        }elseif(($k+1)<strlen($cadena) and $i>0){
                             $i-=2;
                             break;
                         }else{
@@ -55,17 +55,33 @@ if(preg_match('/[^\[\]\{\}\(\)]/',$cadena)==1 or (strlen($cadena)%2)!=0){
                             break;
                         }
                     }else{
+                        echo "Entre aqui al e ";
                         $message = "Correcto";
+                        break;
                     }  
                 }else{
-                    $message = "Correcto";
+                     /* echo "entre a este correcto con br<br>";
+                    $message = "Correcto"; */ 
+                    if(($k+1)<strlen($cadena)){
+                        $i=$k-1;
+                        break; 
+                    }elseif(cie($cadena[0])==$cadena[strlen($cadena)-1]){
+                        echo "Entre a este else if";
+                        $message = "Correcto";
+                        break;
+                    }else{
+                        $message = "Incorrecto";
+                        break;
+                    }
                 }
             }else{
                 if(($k+1)<strlen($cadena)){
                     $difer++;
                     break;
                 }else{
+                    echo "Entre a este incorrecto";
                     $message ="Incorrecto";
+                    break;
                 }
             }     
         }
